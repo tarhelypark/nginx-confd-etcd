@@ -10,13 +10,13 @@ I started with [DigitalOcean's Confd and Etcd](https://www.digitalocean.com/comm
 
 This docker image made for CoreOs cluster. (Detailed cluster setup soon.) You need working Registrators on every cluster nodes and need to create docker Fleet units named with domain name and instance. For example if you would like to run a [Wordpress](https://registry.hub.docker.com/_/wordpress/) unit you need to name the docker instance to 'wordpress.example.com'.
 
-  docker run --name wordpress.example.com --link some-mysql:mysql -p 80 -d wordpress
+`docker run --name wordpress.example.com --link some-mysql:mysql -p 80 -d wordpress`
 
 Registrator will create a key for 'wordpress.example.com' docker instance at '/services/wordpress/core01.mycluster.com:wordpress.example.com:80' with the IP address of the docker instance and port of the Wordpress. For example: '8.8.8.8:49158'
 
 # How to use this image
 
-  docker run --name nginx.example.com -p 80:80 -e NGINX_BACKEND_SERVICE=example.com -e NGINX_DEMO_DOMAIN=my-demo-domain.com -e HOST_IP=8.8.8.8 tarhelypark/nginx-confd-etcd
+`docker run --name nginx.example.com -p 80:80 -e NGINX_BACKEND_SERVICE=example.com -e NGINX_DEMO_DOMAIN=my-demo-domain.com -e HOST_IP=8.8.8.8 tarhelypark/nginx-confd-etcd`
 
 The following environment variables available:
 
