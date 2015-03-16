@@ -17,7 +17,7 @@ COPY confd/* /etc/confd/init/
 RUN mv /etc/nginx/conf.d/*.conf /etc/nginx
 RUN mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf.original
 
 COPY confd-watch /usr/local/bin/confd-watch
 RUN chmod +x /usr/local/bin/confd-watch

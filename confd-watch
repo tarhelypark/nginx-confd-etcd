@@ -7,11 +7,13 @@ export HOST_IP=${HOST_IP:-172.17.8.101}
 export ETCD=$HOST_IP:$ETCD_PORT
 export NGINX_BACKEND_SERVICE=${NGINX_BACKEND_SERVICE:-apache}
 export NGINX_DEMO_DOMAIN=${NGINX_DEMO_DOMAIN:-example.com}
+export NGINX_WORKER_PROCESSES=${NGINX_WORKER_PROCESSES:-$((`nproc`*2))}
 
 echo "[nginx] createing config for service: $NGINX_BACKEND_SERVICE"
 sed "s/<%service%>/$NGINX_BACKEND_SERVICE/g" /etc/confd/init/nginx.tmpl > /etc/confd/templates/nginx.tmpl
 sed -i "s/<%demo_domain%>/$NGINX_DEMO_DOMAIN/g" /etc/confd/templates/nginx.tmpl
 sed "s/<%service%>/$NGINX_BACKEND_SERVICE/g" /etc/confd/init/nginx.toml > /etc/confd/conf.d/nginx.toml
+sed "s/<%worker_processes%>/$NGINX_WORKER_PROCESSES/g" /etc/nginx/nginx.conf.original > /etc/nginx/nginx.conf
 
 echo "[nginx] booting container. ETCD: $ETCD."
 # Try to make initial configuration every 5 seconds until successful
