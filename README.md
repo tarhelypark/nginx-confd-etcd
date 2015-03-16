@@ -29,7 +29,8 @@ The following environment variables available:
 ## Fleet config
 
 Following configuration will start Nginx on every machine on the cluster and dinamicaly create configuration and proxy routing to every working Wordpress (or any other) instance.
-```
+
+`
   [Unit]
   Description=Nginx proxy and load balancer
   After=docker.service
@@ -49,7 +50,7 @@ Following configuration will start Nginx on every machine on the cluster and din
 
   [X-Fleet]
   Global=true
-```
+`
 
 # Usefull links
 * [CoreOS Quickstart quide](https://coreos.com/docs/quickstart/)
