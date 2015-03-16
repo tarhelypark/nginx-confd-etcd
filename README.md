@@ -31,24 +31,25 @@ The following environment variables available:
 Following configuration will start Nginx on every machine on the cluster and dinamicaly create configuration and proxy routing to every working Wordpress (or any other) instance.
 
 ```
- [Unit]
- Description=Nginx proxy and load balancer
- After=docker.service
- After=etcd.service
- 
- [Service]
- TimeoutStartSec=0
- # Get CoreOS environmental variables
- EnvironmentFile=/etc/environment
- 
- ExecStartPre=-/usr/bin/docker kill %p.%i
- ExecStartPre=-/usr/bin/docker rm %p.%i
- ExecStartPre=/usr/bin/docker pull tarhelypark/nginx-confd-etcd
- ExecStart=/usr/bin/docker run --name %p.%i -p ${COREOS_PUBLIC_IPV4}:80:80 -e NGINX_BACKEND_SERVICE=%i -e NGINX_DEMO_DOMAIN=tarhelypark.hu -e HOST_IP=${COREOS_PUBLIC_IPV4} tarhelypark/nginx-confd-etcd
- ExecStop=/usr/bin/docker stop %p.%i
+[Unit]
+Description=Nginx proxy and load balancer
+After=docker.service
+After=etcd.service
 
- [X-Fleet]
- Global=true
+[Service]
+TimeoutStartSec=0
+
+# Get CoreOS environmental variables
+EnvironmentFile=/etc/environment
+
+ExecStartPre=-/usr/bin/docker kill %p.%i
+ExecStartPre=-/usr/bin/docker rm %p.%i
+ExecStartPre=/usr/bin/docker pull tarhelypark/nginx-confd-etcd
+ExecStart=/usr/bin/docker run --name %p.%i -p ${COREOS_PUBLIC_IPV4}:80:80 -e NGINX_BACKEND_SERVICE=%i -e NGINX_DEMO_DOMAIN=tarhelypark.hu -e HOST_IP=${COREOS_PUBLIC_IPV4} tarhelypark/nginx-confd-etcd
+ExecStop=/usr/bin/docker stop %p.%i
+
+[X-Fleet]
+Global=true
 ```
 
 # Usefull links
