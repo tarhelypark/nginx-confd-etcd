@@ -10,7 +10,6 @@ server {
     listen 80;
     server_name {{ index $url 1 }}.<%demo_domain%>;
     server_name {{ index $url 1 }}.{{ index $url 2 }};
-    listen [::]:80 ipv6only=on;
 
     access_log /var/log/nginx/access.log upstreamlog;
 
